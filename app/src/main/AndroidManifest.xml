@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FollowerActivity"
+            android:name=".ReposActivity"
             android:exported="true">
         </activity>
     </application>

@@ -1,5 +1,7 @@
 package edu.upc.dsa.minimo2;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,21 +26,23 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FollowerActivity extends AppCompatActivity {
+public class ReposActivity extends AppCompatActivity {
 
     protected TextView numRepos;
     protected TextView numFollowing;
+    protected TextView numFollowers;
     protected ImageView ImageView;
+    public static final String MyPREFERENCES = "MyPrefs";
     ProgressBar bProgreso;
     RecyclerView recyclerView;
     APIREST apiRest;
     static final String BASEURL = "https://api.github.com/";
-    final Logger log = Logger.getLogger(String.valueOf(FollowerActivity.class));
+    final Logger log = Logger.getLogger(String.valueOf(ReposActivity.class));
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_followers);
+        setContentView(R.layout.activity_repos);
 
         recyclerView = findViewById(R.id.listFollowers);
 
@@ -55,7 +59,9 @@ public class FollowerActivity extends AppCompatActivity {
                 .build();
         apiRest = retrofit.create(APIREST.class);
 
-        String username = getIntent().getStringExtra("username");
+        SharedPreferences sharedPref = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        String username = sharedPref.getString("Username","");
+        //String username = getIntent().getStringExtra("username");
 
         bProgreso = findViewById(R.id.progressBar);
         bProgreso.setVisibility(View.VISIBLE);
@@ -68,27 +74,29 @@ public class FollowerActivity extends AppCompatActivity {
                 log.info("Repos y following correctos");
                 numRepos = findViewById(R.id.numRepos);
                 numFollowing = findViewById(R.id.numFollowing);
+                numFollowers = findViewById(R.id.numFollowers);
                 ImageView = findViewById(R.id.imageView);
                 numRepos.setText(String.valueOf(user.getPublic_repos()));
                 numFollowing.setText(String.valueOf(user.getFollowing()));
+                numFollowers.setText(String.valueOf(user.getFollowers()));
                 Picasso.with(getApplicationContext()).load(user.getAvatar_url()).into(ImageView);
 
-                Call<List<User>> call2 = apiRest.getListaFollowers(username);
-                call2.enqueue(new Callback<List<User>>() {
+                Call<List<Repos>> call2 = apiRest.getListaRepositories(username);
+                call2.enqueue(new Callback<List<Repos>>() {
                     @Override
-                    public void onResponse(Call<List<User>> call2, Response<List<User>> response2) {
+                    public void onResponse(Call<List<Repos>> call2, Response<List<Repos>> response2) {
                         if(!response.isSuccessful()) {
                             log.info("Error" + response2.code());
                             return;
                         }
 
-                        List<User> listaUsers = response2.body();
-                        inicializarRecyclerView(listaUsers);
+                        List<Repos> listaRepos = response2.body();
+                        inicializarRecyclerView(listaRepos);
                         bProgreso.setVisibility(View.GONE);
                     }
 
                     @Override
-                    public void onFailure(Call<List<User>> call2, Throwable t) {
+                    public void onFailure(Call<List<Repos>> call2, Throwable t) {
 
                     }
                 });
@@ -101,8 +109,8 @@ public class FollowerActivity extends AppCompatActivity {
         });
     }
 
-    public void inicializarRecyclerView(List<User> users){ //Inicializar RecyclerView
-        Adapter adapter= new Adapter(this,users);
+    public void inicializarRecyclerView(List<Repos> repos){ //Inicializar RecyclerView
+        Adapter adapter= new Adapter(this,repos);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

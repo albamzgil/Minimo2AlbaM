@@ -11,6 +11,6 @@ public interface APIREST {
     @GET("/users/{username}")
     Call<User> getInfoUser(@Path("username") String user);
 
-    @GET("/users/{username}/followers")
-    Call<List<User>> getListaFollowers(@Path("username") String user);
+    @GET("/users/{username}/repos")
+    Call<List<Repos>> getListaRepositories(@Path("username") String user);
 }

@@ -2,14 +2,14 @@ package edu.upc.dsa.minimo2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Date;
 import java.util.logging.Logger;
 
 import okhttp3.OkHttpClient;
@@ -25,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     APIREST apiRest;
     static final String BASEURL = "https://api.github.com/";
     final Logger log = Logger.getLogger(String.valueOf(MainActivity.class));
+
+    public static final String MyPREFERENCES = "MyPrefs";
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +46,13 @@ public class MainActivity extends AppCompatActivity {
                 .client(client)
                 .build();
         apiRest = retrofit.create(APIREST.class);
+
+        sharedPreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
     }
 
-    //Boton para explorar followers
-    public void exploreFollowers(View view) {
-        Intent intent = new Intent(this, FollowerActivity.class);
+    //Boton para entrar en el usuario
+    public void sendClick(View view) {
+        Intent intent = new Intent(this, ReposActivity.class);
         TextView user = (TextView) findViewById(R.id.username);
         String username = user.getText().toString();
 
@@ -57,7 +62,10 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()){
                     log.info("Usuario introducido correctamente");
-                    intent.putExtra("username", username);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("Username",username);
+                    editor.commit();
+                    //intent.putExtra("username", username);
                     startActivity(intent);
                 }
                 else{

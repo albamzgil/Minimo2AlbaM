@@ -22,8 +22,8 @@
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="262dp"
-        android:layout_height="46dp"
+        android:layout_width="174dp"
+        android:layout_height="43dp"
         android:layout_marginTop="20dp"
         android:ems="10"
         android:inputType="textPersonName"
@@ -34,12 +34,12 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:backgroundTint="#7E7E7E"
-        android:onClick="exploreFollowers"
-        android:text="Explore Followers"
+        android:onClick="sendClick"
+        android:text="SEND"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.839"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
+        app:layout_constraintTop_toTopOf="@+id/username" />
 </androidx.constraintlayout.widget.ConstraintLayout>

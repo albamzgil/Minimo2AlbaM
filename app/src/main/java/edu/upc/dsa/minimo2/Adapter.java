@@ -16,22 +16,22 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-    private List<User> users;
+    private List<Repos> repos;
     Context context;
 
-    public Adapter(Context context, List<User> users) {
-        this.users = users;
+    public Adapter(Context context, List<Repos> repos) {
+        this.repos = repos;
         this.context = context;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView txtName;
-        public ImageView image;
+        public TextView txtLanguage;
 
         public ViewHolder(View v) {
             super(v);
-            txtName = v.findViewById(R.id.followerName);
-            image = v.findViewById(R.id.imageFollower);
+            txtName = v.findViewById(R.id.nameRepo);
+            txtLanguage = v.findViewById(R.id.lenguaje);
         }
     }
 
@@ -41,7 +41,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         // create a new view
         LayoutInflater inflater = LayoutInflater.from(context);
         View v =
-                inflater.inflate(R.layout.follower, parent, false);
+                inflater.inflate(R.layout.repositories, parent, false);
         // set the view's size, margins, paddings and layout parameters
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -49,13 +49,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        User user = users.get(position);
-        holder.txtName.setText(user.getLogin());
-        Picasso.with(context).load(user.getAvatar_url()).into(holder.image);
+        Repos repo = repos.get(position);
+        holder.txtName.setText(repo.getName());
+        holder.txtLanguage.setText(repo.getLanguage());
     }
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return repos.size();
     }
 }

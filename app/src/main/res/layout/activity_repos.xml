@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="25dp"
         android:text="Repositories:"
         android:textColor="#000000"
         android:textStyle="bold"
@@ -42,12 +42,12 @@
         android:id="@+id/following"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
         android:text="Following:"
         android:textColor="#000000"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/repos" />
+        app:layout_constraintStart_toStartOf="@+id/repos"
+        app:layout_constraintTop_toBottomOf="@+id/repos" />
 
     <TextView
         android:id="@+id/numFollowing"
@@ -59,11 +59,11 @@
         app:layout_constraintTop_toTopOf="@+id/following" />
 
     <TextView
-        android:id="@+id/followers"
+        android:id="@+id/repositories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="FOLLOWERS"
+        android:layout_marginTop="30dp"
+        android:text="REPOSITORIES"
         android:textColor="#000000"
         android:textSize="25sp"
         android:textStyle="bold"
@@ -73,12 +73,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listFollowers"
-        android:layout_width="409dp"
-        android:layout_height="433dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="410dp"
+        android:layout_height="386dp"
+        android:layout_marginTop="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/followers" />
+        app:layout_constraintTop_toBottomOf="@+id/repositories" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -89,6 +90,26 @@
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/followers" />
+        app:layout_constraintTop_toBottomOf="@+id/repositories" />
+
+    <TextView
+        android:id="@+id/followers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Followers:"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/following"
+        app:layout_constraintTop_toBottomOf="@+id/following" />
+
+    <TextView
+        android:id="@+id/numFollowers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textColor="#000000"
+        app:layout_constraintBottom_toBottomOf="@+id/followers"
+        app:layout_constraintStart_toEndOf="@+id/followers" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
